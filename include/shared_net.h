@@ -3,7 +3,7 @@
 #define NETS
 #include <cstdint>
 #include <inttypes.h>
-
+#define char unsigned char
 struct srvpack{
     uint8_t CurrPawnNum = 0;
     uint8_t CurrPawnMove=0;
