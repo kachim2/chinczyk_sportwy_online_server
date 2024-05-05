@@ -16,6 +16,7 @@
 
 int main()
 {
+    srand(time(0));
     sf::TcpListener listener;
     if (listener.listen(21376) != sf::Socket::Done)
     {

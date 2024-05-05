@@ -1,5 +1,6 @@
 #include <cpath.h>
 #include "Gra.hpp"
+#include "net.hpp"
 const short bpos[4][2]{{1, 1}, {10, 1}, {10, 10}, {1, 10}
 
 };
@@ -44,6 +45,8 @@ void movepawnone(pawn *p)
                     return;
                 }
             }
+            else
+                throw ;
         }
     }
     return;
@@ -89,8 +92,76 @@ void Gra::add_client(Klient *client)
 {
     clients[players] = client;
     players++;
-    client 
+    client->numer_gracza = players - 1;
 }
-void Gra::handle_packet(clipack pack, short playernum){
+bool Gra::is_pawn_in_game(pawn p){
+    return cpath[p.x][p.y] == 1;
+
+}
+void Gra::retry(clipack pack, short playernum){
+        
+        srvpack spack;
+
+        spack.CurrPawnMove = 0;
+        spack.CurrPawnNum = 0;
+        spack.WhoAreYou = playernum;
+        spack.NextPlayerNum = playernum;
+        spack.DiceRoll = pthrow;
+
+        asend(spack , clients[playernum]->socket);
+}
+void Gra::next(clipack pack, short playernum){
     
+    srvpack spack;
+    spack.CurrPawnMove = pthrow;
+    spack.CurrPawnNum = pack.PawnNum;
+    turn++;
+    turn%=players;
+    spack.NextPlayerNum = turn;
+    pthrow = rand() % 6 + 1;
+    spack.DiceRoll = pthrow;
+    for(int i = 0; i < players; i++){
+        spack.WhoAreYou = i;
+        asend(spack, clients[i]->socket);
+    }
+    
+
+
+}
+void Gra::handle_packet(clipack pack, short playernum)
+{
+    if(pthrow != 6){
+        if(!is_pawn_in_game(pawns[playernum][pack.PawnNum])){
+            bool is_there_one_out = true;
+            for(int i =  0; i < 4; i++){
+                if(is_pawn_in_game(pawns[playernum][i])){
+                    is_there_one_out = true;
+                    break;
+                }
+            }
+            if(is_there_one_out){
+                retry(pack, playernum);
+                return;
+            }else{
+                pthrow = 0;
+                next(pack, playernum);
+                return;
+            }
+
+        }
+    }
+    auto pawncp = pawns[playernum][pack.PawnNum];
+    try
+    {
+        movepawn(&pawns[playernum][pack.PawnNum], pthrow, playernum);
+    }
+    catch(...)
+    {
+    pawns[playernum][pack.PawnNum] = pawncp;
+    retry(pack, playernum);
+    return;
+    }
+    next(pack, playernum);
+    return;
+
 }
