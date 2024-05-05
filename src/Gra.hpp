@@ -27,7 +27,7 @@ class Gra
         pawn pawns[4][4];
         Klient* clients[4];
         int pthrow = rand() % 6 + 1;
-        bool Gra::is_pawn_in_game(pawn p);
+        bool is_pawn_in_game(pawn p);
         void retry(clipack pack, short playernum);
         void next(clipack pack, short playernum);
 };
