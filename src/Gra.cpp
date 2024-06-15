@@ -161,6 +161,7 @@ void Gra::handle_packet(clipack pack, short playernum)
     retry(pack, playernum);
     return;
     }
+    sendback(this->pawns, playernum, pack.PawnNum);
     next(pack, playernum);
     return;
 
