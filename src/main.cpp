@@ -38,7 +38,7 @@ int main()
                 klienci.push_back(client);
 
                 selector.add(client->socket);
-                std::cout << client->socket.getRemoteAddress() << ':' << client->socket.getRemotePort() << '\n';
+                std::cout << client->socket.getRemoteAddress() << ':' << client->socket.getRemotePort() << std::endl;
             }
             else
             {
