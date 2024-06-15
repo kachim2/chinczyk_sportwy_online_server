@@ -132,7 +132,7 @@ void Gra::handle_packet(clipack pack, short playernum)
 {
     if(pthrow != 6){
         if(!is_pawn_in_game(pawns[playernum][pack.PawnNum])){
-            bool is_there_one_out = true;
+            bool is_there_one_out = false;
             for(int i =  0; i < 4; i++){
                 if(is_pawn_in_game(pawns[playernum][i])){
                     is_there_one_out = true;

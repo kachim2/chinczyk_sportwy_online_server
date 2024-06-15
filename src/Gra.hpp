@@ -20,13 +20,13 @@ class Gra
         void handle_packet(clipack pack, short playernum);
         void add_client(Klient *client);
 
-    private:
+
         uint8_t players = 0;
         uint8_t turn = 0;
         uint8_t pturn = -1;
         pawn pawns[4][4];
         Klient* clients[4];
-        int pthrow = rand() % 6 + 1;
+        int pthrow = 0;
         bool is_pawn_in_game(pawn p);
         void retry(clipack pack, short playernum);
         void next(clipack pack, short playernum);

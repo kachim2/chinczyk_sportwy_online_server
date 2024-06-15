@@ -35,7 +35,7 @@ int main()
             if (listener.accept(client->socket) == sf::Socket::Done)
             {
                 klienci.push_back(client);
-                client->socket.setBlocking(0);
+
                 selector.add(client->socket);
                 std::cout << client->socket.getRemoteAddress() << ':' << client->socket.getRemotePort() << '\n';
             }
@@ -71,9 +71,15 @@ int main()
                         {
                             Gry[d.GameNum] = new Gra();
                         }
+                        if(Gry.count(d.GameNum))
                         Gry[d.GameNum]->add_client(client);
                         client->first = 0;
+                        if(Gry[d.GameNum]->players == 4){
+                            if(Gry.count(d.GameNum))
+                            Gry[d.GameNum]->next(d, client->numer_gracza);
+                        }
                     }else{
+                        if(Gry.count(d.GameNum))
                         Gry[d.GameNum]->handle_packet(d, client->numer_gracza);
                     }
                 }
