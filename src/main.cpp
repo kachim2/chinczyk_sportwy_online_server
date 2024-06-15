@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <thread>
+#include <algorithm>
 #include <unordered_map>
 #include "shared_net.h"
 #include "Gra.hpp"
@@ -55,10 +56,16 @@ int main()
                 sf::Socket::Status status = sock.receive(p.data, 2, recieved);
                 if (status == sf::Socket::Status::Disconnected)
                 {
-                    delete Gry[client->game_num];
-                    Gry.erase(client->game_num);
-                    klienci.erase(klienci.begin() + i);
-                    delete client;
+                    int gamenum = client->game_num;
+                    
+                    for(auto &i : Gry[gamenum]->clients){
+                        
+                        delete i;
+                        i = 0;
+                    }
+                    delete Gry[gamenum];
+                    Gry.erase(gamenum);
+                    klienci.erase(std::remove(klienci.begin, klienci.end, 0));
                 }
                 else if (status == sf::Socket::Status::Done)
                 {
