@@ -61,11 +61,15 @@ int main()
                     for(auto &i : Gry[gamenum]->clients){
                         
                         delete i;
-                        i = 0;
+                        i = nullptr;
                     }
                     delete Gry[gamenum];
                     Gry.erase(gamenum);
-                    klienci.erase(std::remove(klienci.begin, klienci.end, 0));
+                    for(int i = klienci.size()-1; i >=0; i--){
+                        if(klienci[i] == nullptr){
+                            klienci.erase(klienci.begin()+i);
+                        }
+                    }
                 }
                 else if (status == sf::Socket::Status::Done)
                 {
