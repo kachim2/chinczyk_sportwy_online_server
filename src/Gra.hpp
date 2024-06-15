@@ -22,7 +22,7 @@ class Gra
 
 
         uint8_t players = 0;
-        uint8_t turn = 0;
+        uint8_t turn = 3;
         uint8_t pturn = -1;
         pawn pawns[4][4];
         Klient* clients[4];
