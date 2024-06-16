@@ -2,6 +2,7 @@
 #define KLIENT_H
 #include<stdint.h>
 #include<SFML/Network.hpp>
+#include <memory>
 struct Klient
 {
     uint8_t numer_gracza;
