@@ -26,7 +26,7 @@ class Gra
         uint8_t turn = 3;
         uint8_t pturn = -1;
         pawn pawns[4][4];
-        std::shared_ptr<Klient> clients[4];
+        std::shared_ptr<Klient> clients[4]{0};
         int pthrow = 0;
         bool is_pawn_in_game(pawn p);
         void retry(clipack pack, short playernum);
