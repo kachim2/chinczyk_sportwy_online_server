@@ -59,8 +59,10 @@ int main()
                     std::cerr << sock.getRemoteAddress() << ':' << sock.getRemotePort() << " disconnected from game: " << client->game_num<< std::endl;
                     int gamenum = client->game_num;
                     for(auto i: Gry[gamenum]->clients){
-                        if(i)
+                        if(i){
                         selector.remove(*i->socket);
+                        klienci.erase(std::find(klienci.begin(), klienci.end(), i));
+                        }
                     }
                     Gry.erase(gamenum);
                     for(auto i : Gry){
