@@ -1,0 +1,6 @@
+services:
+  chinczyk:
+    build: .
+    ports:
+      - 21376:21376
+    restart: unless-stopped
