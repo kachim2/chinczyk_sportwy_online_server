@@ -4,6 +4,6 @@
 #include <SFML/Network.hpp>
 #include <ThreadPool.h>
 #include<utility>
-void asend(srvpack packet, sf::TcpSocket& sock);
+void asend(srvpack packet, std::shared_ptr<sf::TcpSocket> sock);
 
 #endif

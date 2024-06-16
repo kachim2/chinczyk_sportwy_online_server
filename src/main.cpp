@@ -33,12 +33,12 @@ int main()
         if (selector.isReady(listener))
         {
             Klient *client = new Klient;
-            if (listener.accept(client->socket) == sf::Socket::Done)
+            if (listener.accept(*client->socket) == sf::Socket::Done)
             {
                 klienci.push_back(client);
 
-                selector.add(client->socket);
-                std::cout << client->socket.getRemoteAddress() << ':' << client->socket.getRemotePort() << std::endl;
+                selector.add(*client->socket);
+                std::cout << client->socket->getRemoteAddress() << ':' << client->socket->getRemotePort() << std::endl;
             }
             else
             {
@@ -47,7 +47,7 @@ int main()
         }
         for (int i = 0; i < klienci.size(); i++)
         {
-            sf::TcpSocket &sock = klienci[i]->socket;
+            sf::TcpSocket &sock = *klienci[i]->socket;
             Klient *client = klienci[i];
             if (selector.isReady(sock))
             {
