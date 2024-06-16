@@ -88,7 +88,7 @@ void sendback(pawn pawns[4][4], int pr, int pa)
 }
 
 Gra::Gra() {}
-void Gra::add_client(Klient *client)
+void Gra::add_client(std::shared_ptr<Klient> client)
 {
     clients[players] = client;
     players++;

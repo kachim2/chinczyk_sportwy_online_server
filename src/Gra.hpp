@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <shared_net.h>
 #include <SFML/Network.hpp>
+#include<memory>
 #include "Klient.hpp"
 struct pawn
 {
@@ -18,14 +19,14 @@ class Gra
 
         Gra();
         void handle_packet(clipack pack, short playernum);
-        void add_client(Klient *client);
+        void add_client(std::shared_ptr<Klient> client);
 
 
         uint8_t players = 0;
         uint8_t turn = 3;
         uint8_t pturn = -1;
         pawn pawns[4][4];
-        Klient* clients[4];
+        std::shared_ptr<Klient> clients[4];
         int pthrow = 0;
         bool is_pawn_in_game(pawn p);
         void retry(clipack pack, short playernum);

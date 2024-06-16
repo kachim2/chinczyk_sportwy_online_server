@@ -25,7 +25,7 @@ int main()
     }
     sf::SocketSelector selector;
     selector.add(listener);
-    std::vector<Klient *> klienci;
+    std::vector<std::shared_ptr<Klient>> klienci;
     std::unordered_map<std::size_t, Gra *> Gry;
     while (true)
     {
@@ -35,7 +35,7 @@ int main()
             Klient *client = new Klient;
             if (listener.accept(*client->socket) == sf::Socket::Done)
             {
-                klienci.push_back(client);
+                klienci.push_back(std::shared_ptr<Klient>(client));
 
                 selector.add(*client->socket);
                 std::cout << client->socket->getRemoteAddress() << ':' << client->socket->getRemotePort() << std::endl;
@@ -48,7 +48,7 @@ int main()
         for (int i = 0; i < klienci.size(); i++)
         {
             sf::TcpSocket &sock = *klienci[i]->socket;
-            Klient *client = klienci[i];
+            std::shared_ptr<Klient> client = klienci[i];
             if (selector.isReady(sock))
             {
                 packeddata p;
@@ -57,19 +57,7 @@ int main()
                 if (status == sf::Socket::Status::Disconnected)
                 {
                     int gamenum = client->game_num;
-                    
-                    for(auto &i : Gry[gamenum]->clients){
-                        
-                        delete i;
-                        i = nullptr;
-                    }
-                    delete Gry[gamenum];
                     Gry.erase(gamenum);
-                    for(int i = klienci.size()-1; i >=0; i--){
-                        if(klienci[i] == nullptr){
-                            klienci.erase(klienci.begin()+i);
-                        }
-                    }
                 }
                 else if (status == sf::Socket::Status::Done)
                 {
