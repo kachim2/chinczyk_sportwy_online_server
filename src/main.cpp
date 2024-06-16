@@ -56,7 +56,7 @@ int main()
                 sf::Socket::Status status = sock.receive(p.data, 2, recieved);
                 if (status == sf::Socket::Status::Disconnected)
                 {
-                    std::cerr << sock.getRemoteAddress() << ':' << sock.getRemotePort() << "disconnected from game: " << client->game_num<< std::endl;
+                    std::cerr << sock.getRemoteAddress() << ':' << sock.getRemotePort() << " disconnected from game: " << client->game_num<< std::endl;
                     int gamenum = client->game_num;
                     for(auto i: Gry[gamenum]->clients){
                         selector.remove(*i->socket);
