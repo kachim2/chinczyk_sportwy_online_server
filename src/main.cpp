@@ -56,6 +56,7 @@ int main()
                 sf::Socket::Status status = sock.receive(p.data, 2, recieved);
                 if (status == sf::Socket::Status::Disconnected)
                 {
+                    std::cerr << sock.getRemoteAddress() << ':' << sock.getRemotePort() << "disconnected" << std::endl;
                     int gamenum = client->game_num;
                     Gry.erase(gamenum);
                 }
@@ -69,6 +70,7 @@ int main()
                         if (Gry.count(d.GameNum) == 0)
                         {
                             Gry[d.GameNum] = new Gra();
+                            std::cerr << "New Game " << d.GameNum << std::endl;
                         }
                         if(Gry.count(d.GameNum))
                         Gry[d.GameNum]->add_client(client);
