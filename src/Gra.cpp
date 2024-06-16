@@ -162,7 +162,10 @@ void Gra::handle_packet(clipack pack, short playernum)
     return;
     }
     sendback(this->pawns, playernum, pack.PawnNum);
+    if(pthrow == 6)
+    turn--;
     next(pack, playernum);
+
     return;
 
 }
