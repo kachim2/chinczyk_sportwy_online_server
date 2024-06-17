@@ -77,6 +77,7 @@ int main()
                     if (client->first)
                     {
                         client->game_num = d.GameNum;
+                        std::cerr << i << ' ' << client->game_num << std::endl;
                         if (Gry.count(d.GameNum) == 0)
                         {
                             Gry[d.GameNum] = new Gra();
