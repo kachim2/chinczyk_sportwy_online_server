@@ -1,6 +1,6 @@
 services:
   chinczyk:
-    image: ghcr.io/kachim2/chinczyk_sportwy_online_server:main
+    build: .
     ports:
       - 21376:21376
     restart: unless-stopped
